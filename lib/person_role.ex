@@ -10,6 +10,7 @@ defmodule CineasteData.PersonRole do
     field :name, :string
     field :order, :string
     field :uncredited, :boolean, default: false
+    field :qualifiers, {:array, :string}
 
     belongs_to :person, Person
     belongs_to :film, Film

@@ -10,6 +10,8 @@ defmodule CineasteData.Film do
     FilmSeriesEntry,
     FilmStudio,
     FilmSynopsis,
+    GroupRole,
+    GroupStaff,
     KaijuRole,
     PersonRole,
     PersonStaff,
@@ -35,6 +37,9 @@ defmodule CineasteData.Film do
     has_many :kaiju_roles, KaijuRole
     has_many :person_roles, PersonRole
     has_many :person_staff, PersonStaff
+
+    has_many :group_roles, GroupRole
+    has_many :group_staff, GroupStaff
 
     has_one :series_entry, FilmSeriesEntry
     has_one :synopsis, FilmSynopsis
