@@ -17,7 +17,9 @@ defmodule CineasteData.PersonStaff do
   @doc false
   def changeset(person_staff, attrs) do
     person_staff
-    |> cast(attrs, [:role, :order])
-    |> validate_required([:role, :order])
+    |> cast(attrs, [:role, :order, :person_id, :film_id])
+    |> validate_required([:role, :order, :person_id, :film_id])
+    |> assoc_constraint(:person)
+    |> assoc_constraint(:film)
   end
 end
