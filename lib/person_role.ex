@@ -23,6 +23,6 @@ defmodule CineasteData.PersonRole do
   def changeset(person_role, attrs) do
     person_role
     |> cast(attrs, [:name, :order, :uncredited, :avatar_url, :actor_alias])
-    |> validate_required([:name, :order, :uncredited, :avatar_url, :actor_alias])
+    |> validate_required([:name, :order, :uncredited])
   end
 end
