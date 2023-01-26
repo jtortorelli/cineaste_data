@@ -7,6 +7,7 @@ defmodule CineasteData.PersonRole do
   schema "person_roles" do
     field :actor_alias, :string
     field :avatar_url, :string
+    field :description, :string
     field :name, :string
     field :order, :string
     field :uncredited, :boolean, default: false
@@ -24,6 +25,7 @@ defmodule CineasteData.PersonRole do
     person_role
     |> cast(attrs, [
       :name,
+      :description,
       :order,
       :uncredited,
       :avatar_url,
@@ -33,9 +35,20 @@ defmodule CineasteData.PersonRole do
       :character_id,
       :qualifiers
     ])
-    |> validate_required([:name, :order, :uncredited, :film_id, :person_id])
+    |> validate_required([:order, :uncredited, :film_id, :person_id])
+    |> validate_identifying_info()
     |> assoc_constraint(:person)
     |> assoc_constraint(:film)
     |> assoc_constraint(:character)
+  end
+
+  defp validate_identifying_info(changeset) do
+    case apply_changes(changeset) do
+      %{name: nil, description: nil} ->
+        add_error(changeset, :name, "name and description cannot both be null")
+
+      _ ->
+        changeset
+    end
   end
 end
