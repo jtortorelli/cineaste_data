@@ -8,8 +8,8 @@ defmodule CineasteData.KaijuRole do
     field :actor_alias, :string
     field :avatar_url, :string
     field :name, :string
-    field :qualifiers, {:array, :string}
     field :order, :string
+    field :qualifiers, {:array, :string}
     field :uncredited, :boolean, default: false
 
     belongs_to :person, Person
@@ -22,7 +22,20 @@ defmodule CineasteData.KaijuRole do
   @doc false
   def changeset(kaiju_role, attrs) do
     kaiju_role
-    |> cast(attrs, [:name, :order, :uncredited, :avatar_url, :actor_alias])
-    |> validate_required([:name, :order, :uncredited, :avatar_url, :actor_alias])
+    |> cast(attrs, [
+      :actor_alias,
+      :avatar_url,
+      :film_id,
+      :kaiju_character_id,
+      :name,
+      :order,
+      :person_id,
+      :qualifiers,
+      :uncredited
+    ])
+    |> validate_required([:film_id, :name, :order, :uncredited])
+    |> assoc_constraint(:film)
+    |> assoc_constraint(:kaiju_character)
+    |> assoc_constraint(:person)
   end
 end
