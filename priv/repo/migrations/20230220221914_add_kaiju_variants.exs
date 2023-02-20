@@ -15,7 +15,7 @@ defmodule CineasteData.Repo.Migrations.AddKaijuVariants do
       modify(:updated_at, :timestamp, default: fragment("now()"))
     end
 
-    add unique_index(:kaiju_variants, [:slug])
+    create unique_index(:kaiju_variants, [:slug])
 
     alter table(:kaiju_roles) do
       add :kaiju_variant_id, references(:kaiju_variants)
