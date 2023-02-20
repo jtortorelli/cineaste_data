@@ -2,7 +2,7 @@ defmodule CineasteData.KaijuCharacter do
   use Ecto.Schema
   import Ecto.Changeset
 
-  alias CineasteData.KaijuRole
+  alias CineasteData.{KaijuRole, KaijuVariant}
 
   schema "kaiju_characters" do
     field :display_name, :string
@@ -10,6 +10,7 @@ defmodule CineasteData.KaijuCharacter do
     field :tenant, :integer
 
     has_many :roles, KaijuRole
+    has_many :variants, KaijuVariant
 
     timestamps()
   end
