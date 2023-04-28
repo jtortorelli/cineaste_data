@@ -12,6 +12,7 @@ defmodule CineasteData.PersonRole do
     field :order, :string
     field :uncredited, :boolean, default: false
     field :qualifiers, {:array, :string}, default: []
+    field :title, :string
 
     belongs_to :person, Person
     belongs_to :film, Film
@@ -33,7 +34,8 @@ defmodule CineasteData.PersonRole do
       :film_id,
       :person_id,
       :character_id,
-      :qualifiers
+      :qualifiers,
+      :title
     ])
     |> validate_required([:order, :uncredited, :film_id, :person_id])
     |> validate_identifying_info()
