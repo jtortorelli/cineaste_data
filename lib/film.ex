@@ -10,6 +10,7 @@ defmodule CineasteData.Film do
     FilmSeriesEntry,
     FilmStudio,
     FilmSynopsis,
+    FilmWork,
     GroupRole,
     GroupStaff,
     KaijuRole,
@@ -32,8 +33,6 @@ defmodule CineasteData.Film do
     embeds_many :poster_urls, FilmPosterUrl
     embeds_one :original_title, FilmOriginalTitle
 
-    belongs_to :work, Work
-
     has_many :kaiju_roles, KaijuRole
     has_many :person_roles, PersonRole
     has_many :person_staff, PersonStaff
@@ -46,6 +45,7 @@ defmodule CineasteData.Film do
     has_one :credits, FilmCredits
 
     many_to_many :studios, Studio, join_through: FilmStudio
+    many_to_many :works, Work, join_through: FilmWork
 
     timestamps()
   end
