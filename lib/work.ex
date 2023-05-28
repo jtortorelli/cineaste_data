@@ -19,6 +19,7 @@ defmodule CineasteData.Work do
 
   schema "works" do
     field :format, Ecto.Enum, values: @formats
+    field :slug, :string
     field :title, :string
     field :year, :integer
 
@@ -35,8 +36,8 @@ defmodule CineasteData.Work do
   @doc false
   def changeset(work, attrs) do
     work
-    |> cast(attrs, [:title, :format, :year, :publisher_id, :label_id])
-    |> validate_required([:title, :format])
+    |> cast(attrs, [:slug, :title, :format, :year, :publisher_id, :label_id])
+    |> validate_required([:slug, :format])
     |> assoc_constraint(:publisher)
     |> assoc_constraint(:label)
   end
