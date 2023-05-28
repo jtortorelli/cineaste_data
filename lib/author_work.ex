@@ -2,9 +2,11 @@ defmodule CineasteData.AuthorWork do
   use Ecto.Schema
   import Ecto.Changeset
 
+  alias CineasteData.{Person, Work}
+
   schema "author_works" do
-    field :person_id, :id
-    field :work_id, :id
+    belongs_to :person, Person
+    belongs_to :work, Work
     timestamps()
   end
 
