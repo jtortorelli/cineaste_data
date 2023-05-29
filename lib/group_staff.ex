@@ -1,5 +1,4 @@
 defmodule CineasteData.GroupStaff do
-  alias CineasteData.Film
   use Ecto.Schema
   import Ecto.Changeset
 
@@ -17,7 +16,9 @@ defmodule CineasteData.GroupStaff do
 
   def changeset(group_staff, attrs) do
     group_staff
-    |> cast(attrs, [:role, :order])
-    |> validate_required([:role, :order])
+    |> cast(attrs, [:role, :order, :film_id, :group_id])
+    |> validate_required([:role, :order, :film_id, :group_id])
+    |> assoc_constraint(:film)
+    |> assoc_constraint(:group)
   end
 end
