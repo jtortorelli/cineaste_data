@@ -1,5 +1,6 @@
 defmodule CineasteData.FilmSeriesEntry do
   use Ecto.Schema
+  import Ecto.Changeset
 
   alias CineasteData.{Film, FilmSeries}
 
@@ -9,5 +10,13 @@ defmodule CineasteData.FilmSeriesEntry do
     belongs_to :film_series, FilmSeries
     belongs_to :film, Film
     timestamps()
+  end
+
+  def changeset(film_series_entry, attrs) do
+    film_series_entry
+    |> cast(attrs, [:film_series_id, :film_id, :entry_number])
+    |> validate_required([:film_series_id, :film_id, :entry_number])
+    |> assoc_constraint(:film)
+    |> assoc_constraint(:film_series)
   end
 end
