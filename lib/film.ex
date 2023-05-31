@@ -54,6 +54,7 @@ defmodule CineasteData.Film do
   def changeset(film, attrs) do
     film
     |> cast(attrs, [:slug, :title, :release_date, :runtime, :showcased, :tenant, :sort_title])
+    |> cast_embed(:original_title)
     |> validate_required([
       :slug,
       :title,
