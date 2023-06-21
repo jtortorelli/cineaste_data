@@ -31,7 +31,7 @@ defmodule CineasteData.Film do
 
     embeds_many :aliases, FilmAlias
     embeds_many :poster_urls, FilmPosterUrl
-    embeds_one :original_title, FilmOriginalTitle
+    embeds_one :original_title, FilmOriginalTitle, on_replace: :update
 
     has_many :kaiju_roles, KaijuRole
     has_many :person_roles, PersonRole
