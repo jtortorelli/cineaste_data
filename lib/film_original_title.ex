@@ -2,6 +2,7 @@ defmodule CineasteData.FilmOriginalTitle do
   use Ecto.Schema
   import Ecto.Changeset
 
+  @primary_key false
   embedded_schema do
     field :original, :string
     field :transliteration, :string
