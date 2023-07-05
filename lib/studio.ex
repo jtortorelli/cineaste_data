@@ -5,7 +5,10 @@ defmodule CineasteData.Studio do
   alias CineasteData.{Film, FilmStudio}
 
   schema "studios" do
-    field :name, :string
+    field :abbreviation, :string
+    field :aliases, {:array, :string}
+    field :display_name, :string
+    field :original_name, :string
     field :slug, :string
 
     many_to_many :films, Film, join_through: FilmStudio
@@ -16,7 +19,8 @@ defmodule CineasteData.Studio do
   @doc false
   def changeset(studio, attrs) do
     studio
-    |> cast(attrs, [:slug, :name])
-    |> validate_required([:slug, :name])
+    |> cast(attrs, [:abbreviation, :aliases, :display_name, :original_name, :slug])
+    |> validate_required([:slug, :display_name])
+    |> unique_constraint(:slug)
   end
 end
