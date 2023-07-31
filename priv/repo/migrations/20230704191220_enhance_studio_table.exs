@@ -3,6 +3,7 @@ defmodule CineasteData.Repo.Migrations.EnhanceStudioTable do
 
   def change do
     rename table(:studios), :name, to: :display_name
+
     alter table(:studios) do
       add :original_name, :string
       add :abbreviation, :string
