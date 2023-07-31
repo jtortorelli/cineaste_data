@@ -33,7 +33,7 @@ defmodule CineasteData.Film do
     belongs_to :production_committee, ProductionCommittee
 
     embeds_many :aliases, FilmAlias, on_replace: :delete
-    embeds_many :poster_urls, FilmPosterUrl
+    embeds_many :poster_urls, FilmPosterUrl, on_replace: :delete
     embeds_one :original_title, FilmOriginalTitle, on_replace: :update
 
     has_many :kaiju_roles, KaijuRole
@@ -66,12 +66,6 @@ defmodule CineasteData.Film do
       :sort_title,
       :production_committee_id
     ])
-    |> cast_embed(:aliases,
-      with: &FilmAlias.changeset/2,
-      sort_param: :alias_order,
-      drop_param: :alias_delete
-    )
-    |> cast_embed(:original_title)
     |> validate_required([
       :slug,
       :title,
@@ -82,6 +76,17 @@ defmodule CineasteData.Film do
       :sort_title
     ])
     |> unique_constraint(:slug)
+    |> cast_embed(:aliases,
+      with: &FilmAlias.changeset/2,
+      sort_param: :alias_order,
+      drop_param: :alias_delete
+    )
+    |> cast_embed(:poster_urls,
+      with: &FilmPosterUrl.changeset/2,
+      sort_param: :poster_url_order,
+      drop_param: :poster_url_delete
+    )
+    |> cast_embed(:original_title)
     |> assoc_constraint(:production_committee)
   end
 end
