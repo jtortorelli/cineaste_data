@@ -16,6 +16,7 @@ defmodule CineasteData.Film do
     KaijuRole,
     PersonRole,
     PersonStaff,
+    ProductionCommittee,
     Studio,
     Work
   }
@@ -29,7 +30,9 @@ defmodule CineasteData.Film do
     field :tenant, :integer
     field :title, :string
 
-    embeds_many :aliases, FilmAlias
+    belongs_to :production_committee, ProductionCommittee
+
+    embeds_many :aliases, FilmAlias, on_replace: :delete
     embeds_many :poster_urls, FilmPosterUrl
     embeds_one :original_title, FilmOriginalTitle, on_replace: :update
 
@@ -51,9 +54,23 @@ defmodule CineasteData.Film do
   end
 
   @doc false
-  def changeset(film, attrs) do
+  def changeset(film, attrs \\ %{}) do
     film
-    |> cast(attrs, [:slug, :title, :release_date, :runtime, :showcased, :tenant, :sort_title])
+    |> cast(attrs, [
+      :slug,
+      :title,
+      :release_date,
+      :runtime,
+      :showcased,
+      :tenant,
+      :sort_title,
+      :production_committee_id
+    ])
+    |> cast_embed(:aliases,
+      with: &FilmAlias.changeset/2,
+      sort_param: :alias_order,
+      drop_param: :alias_delete
+    )
     |> cast_embed(:original_title)
     |> validate_required([
       :slug,
@@ -64,5 +81,7 @@ defmodule CineasteData.Film do
       :tenant,
       :sort_title
     ])
+    |> unique_constraint(:slug)
+    |> assoc_constraint(:production_committee)
   end
 end
