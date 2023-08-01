@@ -2,6 +2,7 @@ defmodule CineasteData.Film do
   use Ecto.Schema
   import Ecto.Changeset
 
+  alias CineasteData.Role
   alias CineasteData.{
     FilmAlias,
     FilmCredits,
@@ -17,6 +18,8 @@ defmodule CineasteData.Film do
     PersonRole,
     PersonStaff,
     ProductionCommittee,
+    Role,
+    Staff,
     Studio,
     Work
   }
@@ -42,6 +45,9 @@ defmodule CineasteData.Film do
 
     has_many :group_roles, GroupRole
     has_many :group_staff, GroupStaff
+
+    has_many :roles, Role
+    has_many :staff, Staff
 
     has_one :series_entry, FilmSeriesEntry
     has_one :synopsis, FilmSynopsis
