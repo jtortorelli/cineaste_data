@@ -2,7 +2,6 @@ defmodule CineasteData.Film do
   use Ecto.Schema
   import Ecto.Changeset
 
-  alias CineasteData.Role
   alias CineasteData.{
     FilmAlias,
     FilmCredits,
@@ -46,8 +45,8 @@ defmodule CineasteData.Film do
     has_many :group_roles, GroupRole
     has_many :group_staff, GroupStaff
 
-    has_many :roles, Role
-    has_many :staff, Staff
+    has_many :roles, Role, preload_order: [asc: :order], on_replace: :delete
+    has_many :staff, Staff, preload_order: [asc: :order], on_replace: :delete
 
     has_one :series_entry, FilmSeriesEntry
     has_one :synopsis, FilmSynopsis
@@ -93,6 +92,16 @@ defmodule CineasteData.Film do
       drop_param: :poster_url_delete
     )
     |> cast_embed(:original_title)
+    |> cast_assoc(:staff,
+      with: &Staff.changeset/3,
+      sort_param: :staff_order,
+      drop_param: :staff_delete
+    )
+    |> cast_assoc(:roles,
+      with: &Role.changeset/2,
+      sort_param: :role_order,
+      drop_param: :role_delete
+    )
     |> assoc_constraint(:production_committee)
   end
 end

@@ -26,6 +26,17 @@ defmodule CineasteData.Staff do
     |> assoc_constraint(:group)
   end
 
+  def changeset(staff, attrs, position) do
+    staff
+    |> cast(attrs, [:role, :staff_alias, :film_id, :person_id, :group_id])
+    |> change(order: position)
+    |> validate_required([:order, :role, :film_id])
+    |> validate_identifying_info()
+    |> assoc_constraint(:film)
+    |> assoc_constraint(:person)
+    |> assoc_constraint(:group)
+  end
+
   defp validate_identifying_info(changeset) do
     case apply_changes(changeset) do
       %{person_id: nil, group_id: nil} ->

@@ -46,6 +46,30 @@ defmodule CineasteData.Role do
     |> assoc_constraint(:group)
   end
 
+  def changeset(role, attrs, position) do
+    role
+    |> cast(attrs, [
+      :actor_alias,
+      :avatar_url,
+      :description,
+      :name,
+      :uncredited,
+      :qualifiers,
+      :title,
+      :film_id,
+      :character_id,
+      :person_id,
+      :group_id
+    ])
+    |> change(order: position)
+    |> validate_required([:order, :uncredited, :film_id])
+    |> validate_identifying_info()
+    |> assoc_constraint(:film)
+    |> assoc_constraint(:character)
+    |> assoc_constraint(:person)
+    |> assoc_constraint(:group)
+  end
+
   defp validate_identifying_info(changeset) do
     case apply_changes(changeset) do
       %{name: nil, description: nil} ->
