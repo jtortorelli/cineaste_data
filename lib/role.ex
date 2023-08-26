@@ -13,6 +13,7 @@ defmodule CineasteData.Role do
     field :uncredited, :boolean, default: false
     field :qualifiers, {:array, :string}, default: []
     field :title, :string
+    field :top_billed, :boolean, default: true
 
     belongs_to :film, Film
     belongs_to :character, Character
