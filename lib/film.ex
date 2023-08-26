@@ -98,7 +98,7 @@ defmodule CineasteData.Film do
       drop_param: :staff_delete
     )
     |> cast_assoc(:roles,
-      with: &Role.changeset/2,
+      with: &Role.changeset/3,
       sort_param: :role_order,
       drop_param: :role_delete
     )

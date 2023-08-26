@@ -36,9 +36,10 @@ defmodule CineasteData.Role do
       :film_id,
       :character_id,
       :person_id,
-      :group_id
+      :group_id,
+      :top_billed
     ])
-    |> validate_required([:order, :uncredited, :film_id])
+    |> validate_required([:order, :uncredited, :film_id, :top_billed])
     |> validate_identifying_info()
     |> assoc_constraint(:film)
     |> assoc_constraint(:character)
@@ -59,7 +60,8 @@ defmodule CineasteData.Role do
       :film_id,
       :character_id,
       :person_id,
-      :group_id
+      :group_id,
+      :top_billed
     ])
     |> change(order: position)
     |> validate_required([:order, :uncredited, :film_id])
