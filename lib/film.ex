@@ -52,7 +52,8 @@ defmodule CineasteData.Film do
     has_one :synopsis, FilmSynopsis
     has_one :credits, FilmCredits
 
-    many_to_many :studios, Studio, join_through: FilmStudio
+    has_many :film_studios, FilmStudio, on_replace: :delete
+    has_many :studios, through: [:film_studios, :studio]
     many_to_many :works, Work, join_through: FilmWork
 
     timestamps()
@@ -101,6 +102,11 @@ defmodule CineasteData.Film do
       with: &Role.changeset/3,
       sort_param: :role_order,
       drop_param: :role_delete
+    )
+    |> cast_assoc(:film_studios,
+      with: &FilmStudio.changeset/3,
+      sort_param: :film_studios_order,
+      drop_param: :film_studios_delete
     )
     |> assoc_constraint(:production_committee)
   end

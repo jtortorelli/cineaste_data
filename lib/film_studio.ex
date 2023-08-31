@@ -13,8 +13,11 @@ defmodule CineasteData.FilmStudio do
   def changeset(film_studio, attrs) do
     film_studio
     |> cast(attrs, [:film_id, :studio_id])
-    |> validate_required([:film_id, :studio_id])
-    |> assoc_constraint(:film)
+    |> validate_required([:studio_id])
     |> assoc_constraint(:studio)
+  end
+
+  def changeset(film_studio, attrs, _position) do
+    changeset(film_studio, attrs)
   end
 end
