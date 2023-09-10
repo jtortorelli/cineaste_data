@@ -8,7 +8,7 @@ defmodule CineasteData.KaijuRole do
     field :actor_alias, :string
     field :avatar_url, :string
     field :name, :string
-    field :order, :string
+    field :order, :integer
     field :qualifiers, {:array, :string}
     field :uncredited, :boolean, default: false
 
@@ -36,6 +36,27 @@ defmodule CineasteData.KaijuRole do
       :uncredited
     ])
     |> validate_required([:film_id, :name, :order, :uncredited])
+    |> assoc_constraint(:film)
+    |> assoc_constraint(:kaiju_character)
+    |> assoc_constraint(:kaiju_variant)
+    |> assoc_constraint(:person)
+  end
+
+  def changeset(kaiju_role, attrs, position) do
+    kaiju_role
+    |> cast(attrs, [
+      :actor_alias,
+      :avatar_url,
+      :film_id,
+      :kaiju_character_id,
+      :kaiju_variant_id,
+      :name,
+      :person_id,
+      :uncredited
+    ])
+    |> cast(attrs, [:qualifiers], empty_values: [])
+    |> change(order: position)
+    |> validate_required([:name, :order, :uncredited])
     |> assoc_constraint(:film)
     |> assoc_constraint(:kaiju_character)
     |> assoc_constraint(:kaiju_variant)

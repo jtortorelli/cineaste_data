@@ -19,7 +19,6 @@ defmodule CineasteData.Film do
     ProductionCommittee,
     Role,
     Staff,
-    Studio,
     Work
   }
 
@@ -38,7 +37,7 @@ defmodule CineasteData.Film do
     embeds_many :poster_urls, FilmPosterUrl, on_replace: :delete
     embeds_one :original_title, FilmOriginalTitle, on_replace: :update
 
-    has_many :kaiju_roles, KaijuRole
+    has_many :kaiju_roles, KaijuRole, preload_order: [asc: :order], on_replace: :delete
     has_many :person_roles, PersonRole
     has_many :person_staff, PersonStaff
 
@@ -102,6 +101,11 @@ defmodule CineasteData.Film do
       with: &Role.changeset/3,
       sort_param: :role_order,
       drop_param: :role_delete
+    )
+    |> cast_assoc(:kaiju_roles,
+      with: &KaijuRole.changeset/3,
+      sort_param: :kaiju_role_order,
+      drop_param: :kaiju_role_delete
     )
     |> cast_assoc(:film_studios,
       with: &FilmStudio.changeset/3,
