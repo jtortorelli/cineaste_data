@@ -5,6 +5,7 @@ defmodule CineasteData.Film do
   alias CineasteData.{
     FilmAlias,
     FilmCredits,
+    FilmDisplayTitle,
     FilmOriginalTitle,
     FilmPosterUrl,
     FilmSeriesEntry,
@@ -36,6 +37,7 @@ defmodule CineasteData.Film do
     embeds_many :aliases, FilmAlias, on_replace: :delete
     embeds_many :poster_urls, FilmPosterUrl, on_replace: :delete
     embeds_one :original_title, FilmOriginalTitle, on_replace: :update
+    embeds_many :display_title, FilmDisplayTitle, on_replace: :delete
 
     has_many :kaiju_roles, KaijuRole, preload_order: [asc: :order], on_replace: :delete
     has_many :person_roles, PersonRole
