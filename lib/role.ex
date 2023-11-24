@@ -14,6 +14,9 @@ defmodule CineasteData.Role do
     field :qualifiers, {:array, :string}, default: []
     field :title, :string
     field :top_billed, :boolean, default: true
+    field :mergeable, :boolean, default: false
+    field :role_qualifiers, :string
+    field :character_qualifiers, :string
 
     belongs_to :film, Film
     belongs_to :character, Character
@@ -38,7 +41,10 @@ defmodule CineasteData.Role do
       :character_id,
       :person_id,
       :group_id,
-      :top_billed
+      :top_billed,
+      :mergeable,
+      :role_qualifiers,
+      :character_qualifiers
     ])
     |> validate_required([:order, :uncredited, :film_id, :top_billed])
     |> validate_identifying_info()
@@ -62,7 +68,10 @@ defmodule CineasteData.Role do
       :character_id,
       :person_id,
       :group_id,
-      :top_billed
+      :top_billed,
+      :mergeable,
+      :role_qualifiers,
+      :character_qualifiers
     ])
     |> change(order: position)
     |> validate_required([:order, :uncredited, :film_id])
