@@ -8,6 +8,7 @@ defmodule CineasteData.Studio do
     field :abbreviation, :string
     field :aliases, {:array, :string}
     field :display_name, :string
+    field :better_display_name, :string
     field :original_name, :string
     field :slug, :string
 
