@@ -31,6 +31,8 @@ defmodule CineasteData.Film do
     field :sort_title, :string
     field :tenant, :integer
     field :title, :string
+    field :pitch, :string
+    field :tagline, :string
 
     belongs_to :production_committee, ProductionCommittee
 
