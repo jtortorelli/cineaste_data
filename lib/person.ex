@@ -10,6 +10,7 @@ defmodule CineasteData.Person do
     field :slug, :string
     field :sort_name, :string
     field :tenant, :integer
+    field :disambig_chars, :string
 
     has_many :kaiju_roles, KaijuRole
     has_many :person_roles, PersonRole
